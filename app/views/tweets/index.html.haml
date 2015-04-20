@@ -1,0 +1,28 @@
+.container
+  %h2 Recent Tweets
+  = link_to "Settings", settings_path, class: "btn btn-success"
+  - if @tweets.present?
+    %h4 Filter results
+    - if @query
+      = link_to "Reset", root_path, class: "btn btn-default"
+    - @queries.each do |query|
+      - unless @query && @query == query
+        = link_to query, root_path(query: query)
+    %p= paginate @tweets, theme: 'twitter-bootstrap-3'
+    %table.table.table-striped
+      %tr
+        %th Owner
+        %th Created at
+        %th Message
+        %th Query
+      - @tweets.each do |tweet|
+        %tr
+          %td= owners_twitter_link_for(tweet)
+          %td= tweet.tweeted_at.to_formatted_s(:long)
+          %th= tweet.message
+          %th= tweet.query
+    %p= paginate @tweets, theme: 'twitter-bootstrap-3'
+  - else
+    %h4 There are not tweets yet
+    - if @query
+      = link_to "Reset filter", root_path, class: "btn btn-default"

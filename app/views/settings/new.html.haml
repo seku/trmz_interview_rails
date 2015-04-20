@@ -1,0 +1,14 @@
+.container
+  = simple_form_for @setting do |f|
+    .form-group
+      = f.input :query, hint: "Optional, default is: '#{Setting::DEFAULT_QUERY}'"
+    .form-group
+      = f.input :run_at_hour, collection: 0..23, label: "Select hour"
+    .form-group
+      = f.input :run_at_minute, collection: 0..59, label: "Select minute"
+    .form-group
+      = f.input :limit, hint: "Optional, default is '#{Setting::DEFAULT_LIMIT}'"
+    .form-group
+      = f.button :submit
+
+  = link_to "Back to settings", :back

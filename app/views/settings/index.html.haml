@@ -1,0 +1,23 @@
+.container
+  - if @settings.present?
+    %h2= "Schedule for scrapers"
+    %h5= "Every scraper runs once per day"
+    = link_to "New", new_setting_path, class: "btn btn-info"
+    %table.table.table-striped
+      %tr
+        %th Query
+        %th Run at (hour:minutes)
+        %th Limit of tweets
+        %th Remove
+      - @settings.each do |setting|
+        %tr
+          %td= setting.query.present? ? setting.query : TwitterService::DEFAULT_QUERY
+          %td= display_time(setting)
+          %td= setting.limit.present? ? setting.limit : 500
+          %td= button_to "delete", setting, method: :delete, class: "btn"
+  - else
+    %h3= "There are no scrapers set up yet"
+    = link_to "", new_setting_path, class: "glyphicon glyphicon-plus"
+
+  %br
+  = link_to "Back to recent tweets", root_path
